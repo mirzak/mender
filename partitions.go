@@ -166,6 +166,13 @@ func (p *partitions) getAndCacheActivePartition(rootChecker func(StatCommander, 
 		return "", err
 	}
 
+	// HACK!!
+
+	s := []string{"ubi0", bootEnvBootPart}
+	p.active = strings.Join(s, "_")
+	log.Debugf("Setting active partition from ENV: %s", p.active)
+	return p.active, nil
+
 	// First check if mountCandidate matches rootDevice
 	if mountCandidate != "" {
 		if rootChecker(p, mountCandidate, rootDevice) {
